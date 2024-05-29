@@ -28,18 +28,15 @@ const pagesController = require("./controllers/pagesController"),
  */
 
 // 애플리케이션에 Mongoose 설정
-const mongoose = require("mongoose"), // mongoose를 요청
-  dbName = "ut-nodejs";
+const mongoose = require("mongoose"); // mongoose를 요청
 
 // 데이터베이스 연결 설정
-mongoose.connect(`mongodb://127.0.0.1:27017/${dbName}`, {
-  useNewUrlParser: true,
-});
-
-// 연결되면 메시지를 보냄
+mongoose.connect(
+  "mongodb+srv://135ssg:8m6wl5LWOF5fnHKd@ut-node.lvbkpqv.mongodb.net/?retryWrites=true&w=majority&appName=ut-node", //Atils 경로
+)
 const db = mongoose.connection;
-db.once("open", () => {
-  console.log(`Connected to ${dbName} MongoDB using Mongoose!`);
+db.once("open",()=>{
+  console.log("Connedted DB");
 });
 
 /**
