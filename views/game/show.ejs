@@ -1,0 +1,91 @@
+<!-- views/talks/show.ejs -->
+
+<!--
+  Listing 19.5 (p. 283)
+  사용자 Show 테이블
+-->
+<main class="talk-single">
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="pt-5">
+      <hgroup>
+        <small>Talk Data for</small>
+        <h1 class="h3"><%= talk.meta.title %></h1>
+      </hgroup>
+
+      <div class="row">
+        <div class="col col-lg-2">
+          <figure class="talk-img mt-5 mb-5">
+            <img src="<%= talk.talkImg || "https://via.placeholder.com/150" %>"
+            alt="Placeholder image" class="rounded-circle" />
+          </figure>
+        </div>
+        <div class="col col-lg-10">
+          <table class="table table-striped table-hover mt-5 mb-5">
+            <!-- 사용자 데이터를 보여주기 위한 테이블 추가 -->
+            <tbody>
+              <tr>
+                <th scope="col">Title</th>
+                <td><%= talk.meta.title %></td>
+              </tr>
+              <tr>
+                <th scope="col">Subtitle</th>
+                <td><%= talk.meta.subtitle %></td>
+              </tr>
+              <tr>
+                <th scope="col">Date</th>
+                <td><%= talk.given.date %></td>
+              </tr>
+              <tr>
+                <th scope="col">Location</th>
+                <td><%= talk.given.location %></td>
+              </tr>
+              <tr>
+                <th scope="col">Event</th>
+                <td><%= talk.given.event.name %></td>
+              </tr>
+              <tr>
+                <th scope="col">Organization</th>
+                <td><%= talk.given.organization.name %></td>
+              </tr>
+              <tr>
+                <th scope="col">ID</th>
+                <td><%= talk._id %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!--
+        노트: 링크된 구독자 페이지가 제대로 동작하려면 이런 과정을 구독자를 위한 CRUD 함수 및
+        뷰의 생성에서도 동시에 따라야 할 것이다. Href 앵커 태그인 /subscribers/${talk.susbcribedAccount}는
+        구독자의 show 페이지를 나타낸다.
+      -->
+
+      <!--
+        Listing 20.10 (p. 299)
+        CRUD 액션을 위한 링크 추가
+      -->
+      <div class="row">
+        <div class="col col-lg-10 offset-lg-2">
+          <!-- 프로필 페이지에서 사용자 계정의 편집 및 삭제를 위한 링크 추가 -->
+          <a href="/talks" class="btn btn-primary">← Back to Talks</a>
+          <a
+            href="/talks/<%= talk._id %>/edit"
+            class="btn btn-secondary"
+            role="button"
+            >✏️ Edit Talk</a
+          >
+          <a
+            href="/talks/<%= talk._id %>/delete?_method=DELETE"
+            onclick="return confirm('Are you sure you want to delete this record?')"
+            class="btn btn-danger disabled"
+            role="button"
+            aria-disabled="true"
+            >🗑️ Delete Talk</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

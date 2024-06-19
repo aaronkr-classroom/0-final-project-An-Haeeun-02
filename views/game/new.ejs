@@ -1,0 +1,98 @@
+<!-- views/talks/new.ejs -->
+
+<main class="">
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="pt-5">
+      <h1>Add New Talk</h1>
+      <p>Add your latest presentation.</p>
+
+      <div class="row">
+        <div class="col-lg-6 mb-3 mt-3">
+          <div class="data-form">
+            <form action="/talks/create" method="POST">
+              <!-- 사용자 계정을 생성하기 위한 폼을 생성한다 -->
+              <div class="form-group">
+                <label for="username">사용자 이름</label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="firstName">이름</label
+                ><!-- 폼의 input으로서 사용자 속성 추가 -->
+                <input
+                  type="text"
+                  name="first"
+                  id="firstName"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastName">성</label>
+                <input
+                  type="text"
+                  name="last"
+                  id="lastName"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">이메일</label
+                ><!-- email과 password 필드의 보호를 위한 HTML 속성 적용 -->
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password2">비밀번호 확인</label>
+                <input
+                  type="password"
+                  name="password2"
+                  id="password2"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="profileImg">사용자 이미지 링크</label>
+                <input
+                  type="text"
+                  name="profileImg"
+                  id="profileImg"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-lg ut-red">
+                  Add Talk
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-6 text-center text-lg-start mb-3 mt-5">
+          <figure>
+            <img
+              src="https://cdn.pixabay.com/photo/2019/01/26/20/22/public-speaking-3956908_960_720.jpg"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

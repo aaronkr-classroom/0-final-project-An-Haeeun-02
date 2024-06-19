@@ -43,7 +43,7 @@ span.ut-red {
 }
 
 #index {
-  background: url(https://cdn.pixabay.com/photo/2019/10/04/12/05/train-4525444_960_720.jpg)
+  background: url(https://stardewvalley.net/wp-content/uploads/2017/12/stardewbackground.png)
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -58,7 +58,8 @@ span.ut-red {
 }
 
 header {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.605);
+  color: rgb(255, 255, 255);
   border-bottom: 1px solid lightgray;
 }
 
@@ -87,6 +88,7 @@ header {
   font-size: 1.5rem;
   line-height: 1;
   margin: 0 10px 0 0;
+  color: rgb(0, 0, 0);
 }
 
 nav.menu {
