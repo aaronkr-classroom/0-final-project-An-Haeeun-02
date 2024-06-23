@@ -1,72 +1,73 @@
 <!-- views/new.ejs -->
 
 <main class="">
-  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="row align-items-center g-lg-5 py-3">
-      <div class="col-lg-7 text-center text-lg-start mb-3">
-        <figure>
-          <img
-            src="https://cdn.pixabay.com/photo/2015/08/07/06/28/transportation-879026_960_720.jpg"
-          />
-        </figure>
-        <h1 class="display-4">Contact Us</h1>
-        <p class="lead col-lg-10 fs-4">Get in touch to find out more.</p>
-      </div>
-
-      <div class="col-md-10 mx-auto col-lg-5 mb-5">
-        <form
-          class="p-4 p-md-5 border rounded-3 bg-light"
-          action="/games/create"
-          method="post"
-        >
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingName"
-              placeholder="Name"
-              name="name"
-              required
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+      <div class="row align-items-center g-lg-5 py-3">
+        <div class="col-lg-7 text-center text-lg-start mb-3">
+          <figure>
+            <img
+              src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg?t=1711128146"
             />
-            <label for="floatingName">이름</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingCreater"
-              placeholder="Creater"
-              name="creater"
-              required
-            />
-            <label for="floatingCreater">창작자</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="url"
-              class="form-control"
-              id="floatingLink"
-              placeholder="https://example.com"
-              name="link"
-              required
-            />
-            <label for="floatingLink">링크</label>
-          </div>
-          <div class="checkbox mb-3">
-            <label for="type">모드 타입</label>
-            <select id="type" name="type" class="form-control" required>
-              <option value="mode">모드</option>
-              <option value="retexture">리텍스쳐</option>
-              <option value="expansion">확장</option>
-            </select>
-          </div>
-          <button class="w-100 btn btn-lg btn-primary ut-red" type="submit">
-            추가하기
-          </button>
-          <hr />
-          <small class="text-muted">모드 추가하기</small>
-        </form>
+          </figure>
+          <h1 class="display-4">Add Mode</h1>
+          <p class="lead col-lg-10 fs-4">Get Mode.</p>
+        </div>
+  
+        <div class="col-md-10 mx-auto col-lg-5 mb-5">
+          <form
+            class="p-4 p-md-5 border rounded-3 bg-light"
+            action="/games/create"
+            method="post"
+          >
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="floatingName"
+                placeholder="Name"
+                name="name"
+                required
+              />
+              <label for="floatingName">이름</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="floatingCreater"
+                placeholder="Creater"
+                name="creater"
+                required
+              />
+              <label for="floatingCreater">창작자</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="url"
+                class="form-control"
+                id="floatingLink"
+                placeholder="https://example.com"
+                name="link"
+                required
+              />
+              <label for="floatingLink">링크</label>
+            </div>
+            <div class="checkbox mb-3">
+              <label for="type">모드 타입</label>
+              <select id="type" name="type" class="form-control" required>
+                <option value="mode">모드</option>
+                <option value="retexture">리텍스쳐</option>
+                <option value="expansion">확장</option>
+              </select>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary ut-red" type="submit">
+              추가하기
+            </button>
+            <hr />
+            <small class="text-muted">모드 추가하기</small>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
+  

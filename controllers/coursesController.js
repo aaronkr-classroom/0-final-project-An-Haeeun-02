@@ -6,9 +6,93 @@
  * Listing 18.11 (p. 271)
  * courseController.js에서 인덱스 액션 생성과 index 액션의 재방문
  */
-const Course = require("../models/Course"); // 사용자 모델 요청
+const Course = require("../models/Course"), // 사용자 모델 요청
+  User = require("../models/User"), // @TODO: Lesson 27.3
+  httpStatus = require("http-status-codes"); // @TODO: Lesson 27 HTTP 상태 코드 요청
 
 module.exports = {
+  /**
+   * Listing 27.2 (p. 393)
+   * @TODO: coursesController.js에서 강좌를 위한 JSON 응답 추가
+   */
+  respondJSON: (req, res) => {
+    res.json({
+      status: httpStatus.OK,
+      data: res.locals,
+    }); // 로컬 데이터를 JSON 포맷으로 응답
+  },
+
+  // JSON 포맷으로 500 상태 코드와 에러 메시지 응답
+  errorJSON: (error, req, res, next) => {
+    let errorObject;
+
+    if (error) {
+      errorObject = {
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      };
+    } else {
+      errorObject = {
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        message: "Unknown Error.",
+      };
+    }
+
+    res.json(errorObject);
+  },
+
+  /**
+   * Listing 27.6 (p. 399-400)
+   * @TODO: courseController.js에서 강좌 참여 액션의 생성
+   */
+  join: (req, res, next) => {
+    let courseId = req.params.id, // 요청으로부터 강좌 ID 수집
+      currentUser = req.user; // 요청으로부터 현재 사용자 수집
+
+    if (currentUser) {
+      // 사용자가 로그인 중인지 확인
+      User.findByIdAndUpdate(currentUser, {
+        $addToSet: {
+          courses: courseId, // 사용자의 강좌 배열에 강좌 ID 추가
+        },
+      }) // 사용자의 강좌 배열에 강좌 ID 추가
+        .then(() => {
+          res.locals.success = true;
+          next();
+        })
+        .catch((error) => {
+          next(error);
+        });
+    } else {
+      next(new Error("User must log in."));
+    }
+  },
+
+  /**
+   * Listing 27.7 (p. 401)
+   * @TODO: courseController.js에서 강좌 필터에 액션 추가
+   */
+  filterUserCourses: (req, res, next) => {
+    let currentUser = req.user; // 요청으로부터 현재 사용자 수집
+
+    if (currentUser) {
+      // 사용자가 로그인 중인지 확인
+      let mappedCourses = res.locals.courses.map((course) => {
+        // 강좌 배열을 푸프로 돌며
+        let userJoined = currentUser.courses.some((userCourse) => {
+          return userCourse.equals(course._id); // 사용자가 강좌에 참여했는지 확인
+        });
+
+        return Object.assign(course.toObject(), { joined: userJoined });
+      });
+
+      res.locals.courses = mappedCourses;
+      next();
+    } else {
+      next();
+    }
+  },
+
   index: (req, res, next) => {
     Course.find() // index 액션에서만 퀴리 실행
       .then((courses) => {
@@ -23,10 +107,18 @@ module.exports = {
       });
   },
   indexView: (req, res) => {
-    res.render("courses/index", {
-      page: "courses",
-      title: "All Courses",
-    }); // 분리된 액션으로 뷰 렌더링
+    /*
+     * Listing 26.3 (p. 384)
+     * @TODO: userController.js에서 쿼리 매개변수가 존재할 때 JSON으로 응답하기
+     */
+    if (req.query.format === "json") {
+      res.json(res.locals.users);
+    } else {
+      res.render("courses/index", {
+        page: "courses",
+        title: "All Courses",
+      }); // 분리된 액션으로 뷰 렌더링
+    }
   },
 
   /**
@@ -50,14 +142,10 @@ module.exports = {
   // 사용자를 데이터베이스에 저장하기 위한 create 액션 추가
   create: (req, res, next) => {
     let courseParams = {
-      name: {
-        first: req.body.first,
-        last: req.body.last,
-      },
-      email: req.body.email,
-      coursename: req.body.coursename,
-      password: req.body.password,
-      profileImg: req.body.profileImg,
+      title: req.body.title,
+      description: req.body.description,
+      maxStudents: req.body.maxStudents,
+      cost: req.body.cost,
     };
     // 폼 파라미터로 사용자 생성
     Course.create(courseParams)
@@ -135,14 +223,10 @@ module.exports = {
   update: (req, res, next) => {
     let courseId = req.params.id,
       courseParams = {
-        name: {
-          first: req.body.first,
-          last: req.body.last,
-        },
-        email: req.body.email,
-        coursename: req.body.coursename,
-        password: req.body.password,
-        profileImg: req.body.profileImg,
+        title: req.body.title,
+        description: req.body.description,
+        maxStudents: req.body.maxStudents,
+        cost: req.body.cost,
       }; // 요청으로부터 사용자 파라미터 취득
 
     Course.findByIdAndUpdate(courseId, {

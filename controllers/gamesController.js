@@ -5,11 +5,12 @@
  * Listing 18.11 (p. 271)
  * userController.js에서 인덱스 액션 생성과 index 액션의 재방문
  */
-const 
-  passport = require("passport"),
-  httpStatus = require("http-status-codes"), // Lesson 27.3 HTTP 상태 코드 요청
-  Game = require("../models/Game"); // 사용자 모델 요청
-  
+const game = require("../models/Game"); // 사용자 모델 요청
+
+/**
+ * [노트] getUserParams는 이전 캡스톤 프로젝트 (21장)에서 사용돼 왔다. 이 함수는 컨트롤러를 통해
+ * 재사용돼 사용자 속성을 하나의 객체로 구성한다. 동일한 함수를 다른 모델 컨트롤러에도 구성해야 한다.
+ */
 const getGameParams = (body) => {
   return {
     name: body.name,
@@ -20,129 +21,8 @@ const getGameParams = (body) => {
 };
 
 module.exports = {
-  /**
-   * Listing 28.1, 3 (p. 407, 410)
-   * usersController.js에서 API 토큰의 검증을 위한 미들웨어 함수의 추가
-   */
-  verifyToken: (req, res, next) => {
-    let token = req.query.apiToken; // 쿼리 매개변수로부터 API 토큰 수집
-    console.log("Verifying: ", token);
-    if (token) {
-      Game.findOne({ apiToken: token }) // API 토큰을 사용해 사용자 찾기
-        .then((user) => {
-          if (user) {
-            next(); // 토큰이 일치하면 next 미들웨어 호출
-          } else {
-            next(new Error("Invalid API token!")); // 일치하지 않으면 에러 메시지로 응답
-          }
-        })
-        .catch((error) => {
-          next(new Error(error.message)); // 에러 메시지로 응답
-        });
-    } else {
-      next(new Error("No API token!")); // 일치하지 않으면 에러 메시지로 응답
-    }
-  },
-
-  /**
-   * Listing 28.4 (p. 413)
-   * @TODO: usersController.js에서 API를 위한 로그인 액션 생성
-   */
-  apiAuthenticate: (req, res, next) => {
-    passport.authenticate("local", (errors, game) => {
-      if (game) {
-        console.log("Houston, we have a user!", game);
-        let signedToken = jsonWebToken.sign(
-          {
-            data: game._id,
-            exp: new Date().setDate(new Date().getDate() + 1),
-          },
-          "secret_encoding_passphrase"
-        ); // 사용자 ID와 만료 시간을 사용해 토큰 서명
-        res.json({
-          success: true,
-          message: "Success authenticating user!",
-        }); // 토큰을 JSON으로 응답
-      } else {
-        console.log("Houston, we have a problem!");
-        res.json({
-          success: false,
-          message: "Could not authenticate user.",
-        }); // 인증 실패 시 메시지로 응답
-      }
-    })(req, res, next);
-  },
-
-  /**
-   * Listing 28.6 (p. 414-415)
-   * userController.js에서 API를 위한 유효성 체크 액션 생성
-   */
-  verifyJWT: (req, res, next) => {
-    let token = req.headers.token; // 헤더로부터 토큰 수집
-    console.log(req.headers);
-    if (token) {
-      jsonWebToken.verify(
-        token,
-        "secret_encoding_passphrase",
-        (errors, payload) => {
-          if (payload) {
-            Game.findById(payload.data).then((user) => {
-              if (user) {
-                next(); // 사용자가 존재하면 next 미들웨어 호출
-              } else {
-                res.status(httpStatus.FORBIDDEN).json({
-                  error: true,
-                  message: "No user account found.",
-                }); // 사용자가 없으면 에러 메시지로 응답
-              }
-            });
-          } else {
-            res.status(httpStatus.UNAUTHORIZED).json({
-              error: true,
-              message: "Cannot verify API token.",
-            }); // 토큰이 일치하지 않으면 에러 메시지로 응답
-            next();
-          }
-        }
-      );
-    } else {
-      res.status(httpStatus.UNAUTHORIZED).json({
-        error: true,
-        message: "Provide Token.",
-      }); // 토큰이 없으면 에러 메시지로 응답
-    }
-  },
-
-
-  setReferer: (req, res, next) => {
-    res.locals.redirect = req.headers.referer;
-    next();
-  },
-
-  // local strategy로 사용자를 인증하기 위해 passport 호출
-  authenticate: passport.authenticate("local", {
-    // 성공, 실패의 플래시 메시지를 설정하고 사용자의 인중 상태에 따라 리디렉션할 경로를 지정한다
-    failureRedirect: "/users/login",
-    failureFlash: "Failed to login.",
-    successRedirect: "/chat",
-    successFlash: "Logged in!",
-  }), // passport의 authenticate 메소드를 사용해 사용자 인증
-
-  /**
-   * Listing 24.8 (p. 359)
-   * usersController.js에서 logout 액션 추가
-   */
-  logout: (req, res, next) => {
-    req.logout(() => {
-      console.log("Logged out!");
-    }); // passport의 logout 메소드를 사용해 사용자 로그아웃
-    req.flash("success", "You have been logged out!"); // 로그아웃 성공 메시지
-    res.locals.redirect = "/"; // 홈페이지로 리디렉션
-    next();
-  },
-
   index: (req, res, next) => {
-    Game.find() // index 액션에서만 퀴리 실행
+    game.find() // index 액션에서만 퀴리 실행
       .then((games) => {
         // 사용자 배열로 index 페이지 렌더링
         res.locals.games = games; // 응답상에서 사용자 데이터를 저장하고 다음 미들웨어 함수 호출
@@ -155,22 +35,10 @@ module.exports = {
       });
   },
   indexView: (req, res) => {
-    /*
-     * Listing 26.3 (p. 384)
-     * @TODO: userController.js에서 쿼리 매개변수가 존재할 때 JSON으로 응답하기
-     */
-    if (req.query.format === "json") {
-      res.json(res.locals.game);
-    } else {
-      res.render("game/index", {
-        page: "game",
-        title: "All Game",
-        // flashMessages: {
-        //   // Listing 22.6 (p. 331) - 렌더링된 인덱스 뷰에서 플래시 메시지를 추가
-        //   success: "Loaded all users!",
-        // },
-      }); // 분리된 액션으로 뷰 렌더링
-    }
+    res.render("game/index", {
+      page: "game",
+      title: "All Users",
+    }); // 분리된 액션으로 뷰 렌더링
   },
 
   /**
@@ -179,12 +47,15 @@ module.exports = {
    * 뷰는 views 폴더 아래 subscribers 폴더에 있어야 한다.
    */
 
-
+  /**
+   * Listing 19.2 (p. 278)
+   * userController.js에 액션 생성 추가
+   */
   // 폼의 렌더링을 위한 새로운 액션 추가
   new: (req, res) => {
     res.render("game/new", {
       page: "new-game",
-      title: "New Game",
+      title: "New game",
     });
   },
 
@@ -196,37 +67,28 @@ module.exports = {
    * 메시지들을 연결했기 때문에 메시지들은 결국 응답 객체로 연결된다.
    */
   create: (req, res, next) => {
-    if (req.skip) next(); // 유효성 체크를 통과하지 못하면 다음 미들웨어 함수로 전달
-
-    let newGame = new Game(getGameParams(req.body)); // Listing 22.3 (p. 328)
-
-    /**
-     * Listing 24.4 (p. 355)
-     * usersController.js에서 create 액션에서의 새로운 사용자 등록
-     * 원래 있는 코드는 다 지우고 아래 코드로 대체
-     */
-    Game.register(newGame, req.body.password, (error, game) => {
-      // 새로운 사용자 등록
-      if (game) {
-        // 새로운 사용자가 등록되면
+    let gameParams = getGameParams(req.body); // Listing 22.3 (p. 328)
+    // 폼 파라미터로 사용자 생성
+    game.create(gameParams)
+      .then((game) => {
         req.flash(
           "success",
-          `${game.fullName}'s account created successfully!`
-        ); // 플래시 메시지를 추가하고
-        res.locals.redirect = "/games"; // 사용자 인덱스 페이지로 리디렉션
+          `${game.name}'s account created successfully!`
+        ); // Listing 22.3 (p. 328)
+        res.locals.redirect = "/games";
+        res.locals.game = game;
         next();
-      } else {
-        // 새로운 사용자가 등록되지 않으면
+      })
+      .catch((error) => {
+        console.log(`Error saving user: ${error.message}`);
+        res.locals.redirect = "/games/new";
         req.flash(
           "error",
           `Failed to create user account because: ${error.message}.`
-        ); // 에러 메시지를 추가하고
-        res.locals.redirect = "/games/new"; // 사용자 생성 페이지로 리디렉션
-        next();
-      }
-    });
+        ); // Listing 22.3 (p. 328)
+        next(error);
+      });
   },
-
 
   // 분리된 redirectView 액션에서 뷰 렌더링
   redirectView: (req, res, next) => {
@@ -247,7 +109,7 @@ module.exports = {
    */
   show: (req, res, next) => {
     let gameId = req.params.id; // request params로부터 사용자 ID 수집
-    Game.findById(gameId) // ID로 사용자 찾기
+    game.findById(gameId) // ID로 사용자 찾기
       .then((game) => {
         res.locals.game = game; // 응답 객체를 통해 다음 믿들웨어 함수로 사용자 전달
         next();
@@ -273,16 +135,16 @@ module.exports = {
   // edit 액션 추가
   edit: (req, res, next) => {
     let gameId = req.params.id;
-    Game.findById(gameId) // ID로 데이터베이스에서 게임을 찾기 위해 findById 사용
+    game.findById(gameId) // ID로 데이터베이스에서 사용자를 찾기 위한 findById 사용
       .then((game) => {
         res.render("game/edit", {
-          game: game, // 수정: user가 아닌 game으로 변수명 수정
-          page: "edit-game",
-          title: "Edit Game",
-        }); // 데이터베이스에서 특정 게임을 위한 편집 페이지 렌더링
+          game: game,
+          page: "edit-user",
+          title: "Edit User",
+        }); // 데이터베이스에서 내 특정 사용자를 위한 편집 페이지 렌더링
       })
       .catch((error) => {
-        console.log(`Error fetching game by ID: ${error.message}`);
+        console.log(`Error fetching user by ID: ${error.message}`);
         next(error);
       });
   },
@@ -290,12 +152,12 @@ module.exports = {
   // update 액션 추가
   update: (req, res, next) => {
     let gameId = req.params.id,
+      // @TODO: getUserParams 사용 - Listing 22.3 (p. 328)
       gameParams = getGameParams(req.body);
-
-    Game.findByIdAndUpdate(gameId, {
+    game.findByIdAndUpdate(gameId, {
       $set: gameParams,
     }) //ID로 사용자를 찾아 단일 명령으로 레코드를 수정하기 위한 findByIdAndUpdate의 사용
-      .then((game) => {
+      .then((user) => {
         res.locals.redirect = `/games/${gameId}`;
         res.locals.game = game;
         next(); // 지역 변수로서 응답하기 위해 사용자를 추가하고 다음 미들웨어 함수 호출
@@ -312,7 +174,7 @@ module.exports = {
    */
   delete: (req, res, next) => {
     let gameId = req.params.id;
-    Game.findByIdAndRemove(gameId) // findByIdAndRemove 메소드를 이용한 사용자 삭제
+    game.findByIdAndRemove(gameId) // findByIdAndRemove 메소드를 이용한 사용자 삭제
       .then(() => {
         res.locals.redirect = "/games";
         next();

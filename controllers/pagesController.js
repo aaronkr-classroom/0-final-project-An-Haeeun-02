@@ -24,4 +24,10 @@ module.exports = {
       title: "Transportation",
     });
   },
+  chat: (req, res) => {
+    res.render("chat", {
+      page: "chat",
+      title: "Chat",
+    });
+  },
 };

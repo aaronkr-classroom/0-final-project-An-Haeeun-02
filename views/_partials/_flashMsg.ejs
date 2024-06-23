@@ -1,0 +1,22 @@
+<!-- views/_partials/_flashMsg.ejs -->
+
+<!--
+    Listing 22.4 (p. 329)
+    layout.ejs에서 플래시 메시지 추가
+-->
+<% if (flashMessages) { %><!-- flashMessages가 있는지 체크 -->
+<div class="flash-msg">
+  <% if (flashMessages.success) { %>
+  <div class="alert alert-success flash success">
+    <!-- success 메시지 출력 -->
+    <%= flashMessages.success %>
+  </div>
+
+  <% } else if (flashMessages.error) { %>
+  <div class="alert alert-danger flash error">
+    <!-- error 메시지 출력 -->
+    <%= flashMessages.error %>
+  </div>
+  <% } %>
+</div>
+<% } %>

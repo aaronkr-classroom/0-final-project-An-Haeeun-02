@@ -23,10 +23,18 @@ module.exports = {
       });
   },
   indexView: (req, res) => {
-    res.render("subscribers/index", {
-      page: "subscribers",
-      title: "All Subscribers",
-    }); // 분리된 액션으로 뷰 렌더링
+    /*
+     * Listing 26.3 (p. 384)
+     * @TODO: userController.js에서 쿼리 매개변수가 존재할 때 JSON으로 응답하기
+     */
+    if (req.query.format === "json") {
+      res.json(res.locals.users);
+    } else {
+      res.render("subscribers/index", {
+        page: "subscribers",
+        title: "All Subscribers",
+      }); // 분리된 액션으로 뷰 렌더링
+    }
   },
 
   /**
@@ -52,7 +60,7 @@ module.exports = {
     let subscriberParams = {
       name: req.body.name,
       email: req.body.email,
-      phone: req.body.phone,
+      phoneNumber: req.body.phoneNumber,
       newsletter: req.body.newsletter,
     };
     // 폼 파라미터로 사용자 생성
@@ -130,12 +138,12 @@ module.exports = {
   // update 액션 추가
   update: (req, res, next) => {
     let subscriberId = req.params.id,
-    subscriberParams = {
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      newsletter: req.body.newsletter,
-    }; // 요청으로부터 사용자 파라미터 취득
+      subscriberParams = {
+        name: req.body.name,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        newsletter: req.body.newsletter,
+      }; // 요청으로부터 사용자 파라미터 취득
 
     User.findByIdAndUpdate(subscriberId, {
       $set: subscriberParams,

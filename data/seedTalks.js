@@ -5,7 +5,7 @@ const mongoose = require("mongoose"),
   Talk = require("../models/Talk");
 
 // 데이터베이스 연결 설정
-mongoose.connect("mongodb://127.0.0.1:27017/ut-nodejs", {
+mongoose.connect("mongodb://127.0.0.1:27017/aaronkr", {
   useNewUrlParser: true,
 });
 

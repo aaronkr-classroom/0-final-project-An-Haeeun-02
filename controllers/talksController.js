@@ -18,10 +18,18 @@ module.exports = {
       });
   },
   indexView: (req, res) => {
-    res.render("talks/index", {
-      page: "talks",
-      title: "All Talks",
-    }); // 분리된 액션으로 뷰 렌더링
+    /*
+     * Listing 26.3 (p. 384)
+     * @TODO: userController.js에서 쿼리 매개변수가 존재할 때 JSON으로 응답하기
+     */
+    if (req.query.format === "json") {
+      res.json(res.locals.users);
+    } else {
+      res.render("talks/index", {
+        page: "talks",
+        title: "All Talks",
+      }); // 분리된 액션으로 뷰 렌더링
+    }
   },
 
   /**

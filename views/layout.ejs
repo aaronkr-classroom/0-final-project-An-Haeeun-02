@@ -9,7 +9,7 @@
     <title>Final Project | <%= title %></title>
     <!-- @TODO: title태그를 완성하십시오 -->
 
-    <meta name="author" content="Aaron" />
+    <meta name="Haeeun" content="Haeeun" />
     <!-- @TODO: 자기 이름을 작성하십시오 -->
 
     <!-- @TODO: CSS 파일에 대한 link테그를 완성하십시오 -->
@@ -27,13 +27,21 @@
     <!-- <link rel="stylesheet" href="/css/aaronkr.css" /> -->
   </head>
   <body>
-    <%- include('_partials/_header') %> <%- body %> <%-
+    <% if (loggedIn && currentUser.apiToken) { %>
+    <div id="apiToken" data-token="<%= currentUser.apiToken %>"></div>
+    <% } %> <%- include('_partials/_header') %>
+    <!--
+      Listing 22.4 (p. 329)
+      layout.ejs에서 플래시 메시지 추가
+    -->
+    <%- include('_partials/_flashMsg') %> <%- body %> <%-
     include('_partials/_footer') %>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.7.0.slim.js"></script>
-    
+    <script src="/js/jquery-3.7.1.js"></script>
+    <!-- update jQuery (remove slim) -->
+
     <!-- Popper Development version -->
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
 
@@ -41,10 +49,21 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script> -->
 
     <!-- Bootstrap -->
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="/js/bootstrap.bundle.min.js"></script> -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- @TODO: JS 파일에 대한 script테그를 완성하십시오 -->
     <script src="/js/functions.js"></script>
+
+    <!-- @TODO Lesson 26: joinFunctions.js 추가하기 -->
+    <script src="/js/joinFunctions.js"></script>
+
+    <!-- @TODO Lesson 27: chatFunctions.js 추가하기 -->
+    <script src="/socket.io/socket.io.js"></script>
   </body>
 
   <!--

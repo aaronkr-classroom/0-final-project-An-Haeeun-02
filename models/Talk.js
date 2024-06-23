@@ -78,6 +78,8 @@ const mongoose = require("mongoose"),
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+  }, {
+    timestamps: true,
   });
 
 module.exports = mongoose.model("Talk", talkSchema);

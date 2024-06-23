@@ -1,0 +1,31 @@
+<!-- views/chat.ejs -->
+<!-- 
+    Listing 30.1
+    @TODO: chat.js에서 채팅 박스 생성
+
+    Listing 31.3 (p. 452)
+    hidden field 추가
+-->
+<div class="container">
+  <h1>Chat</h1>
+  <% if (currentUser) { %>
+  <form id="chat-form">
+    <input type="text" id="chat-input" />
+    <input
+      type="hidden"
+      id="chat-username"
+      value="<%= currentUser.username %>"
+    />
+    <input
+      type="hidden"
+      id="chat-user-full-name"
+      value="<%= currentUser.fullName %>"
+    />
+    <input type="hidden" id="chat-user-id" value="<%= currentUser._id %>" />
+    <input type="submit" value="Send" />
+  </form>
+  <% } else { %>
+  <p>Please log in to chat.</p>
+  <% } %>
+  <div id="chat"></div>
+</div>

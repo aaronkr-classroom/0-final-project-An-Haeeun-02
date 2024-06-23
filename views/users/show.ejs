@@ -56,6 +56,10 @@
                 <th scope="col">ID</th>
                 <td><%= user._id %></td>
               </tr>
+              <tr>
+                <th scope="col">API Token</th>
+                <td><%= user.apiToken %></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -94,9 +98,8 @@
           <a
             href="/users/<%= user._id %>/delete?_method=DELETE"
             onclick="return confirm('Are you sure you want to delete this record?')"
-            class="btn btn-danger disabled"
+            class="btn btn-danger"
             role="button"
-            aria-disabled="true"
             >🗑️ Delete User</a
           >
         </div>

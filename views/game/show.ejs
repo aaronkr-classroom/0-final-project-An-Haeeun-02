@@ -5,67 +5,68 @@
   사용자 Show 테이블
 -->
 <main class="user-profile">
-  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="pt-5">
-      <h1>User Data for <%= game.name %></h1>
-
-      <div class="row">
-        <div class="col col-lg-10">
-          <table class="table table-striped table-hover mt-5 mb-5">
-            <!-- 사용자 데이터를 보여주기 위한 테이블 추가 -->
-            <tbody>
-              <tr>
-                <th scope="col">Uname</th>
-                <td><%= game.name %></td>
-              </tr>
-              <tr>
-                <th scope="col">Creater</th>
-                <td><%= game.cerater %></td>
-              </tr>
-              <tr>
-                <th scope="col">type</th>
-                <td><%= game.type %></td>
-              </tr>
-              <tr>
-                <th scope="col">link</th>
-                <td><%= game.link %></td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+      <div class="pt-5">
+        <h1>User Data for <%= game.name %></h1>
+  
+        <div class="row">
+          <div class="col col-lg-10">
+            <table class="table table-striped table-hover mt-5 mb-5">
+              <!-- 사용자 데이터를 보여주기 위한 테이블 추가 -->
+              <tbody>
+                <tr>
+                  <th scope="col">Uname</th>
+                  <td><%= game.name %></td>
+                </tr>
+                <tr>
+                  <th scope="col">Creater</th>
+                  <td><%= game.cerater %></td>
+                </tr>
+                <tr>
+                  <th scope="col">type</th>
+                  <td><%= game.type %></td>
+                </tr>
+                <tr>
+                  <th scope="col">link</th>
+                  <td><%= game.link %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-
-
-      <!--
-        노트: 링크된 구독자 페이지가 제대로 동작하려면 이런 과정을 구독자를 위한 CRUD 함수 및
-        뷰의 생성에서도 동시에 따라야 할 것이다. Href 앵커 태그인 /subscribers/${user.susbcribedAccount}는
-        구독자의 show 페이지를 나타낸다.
-      -->
-
-      <!--
-        Listing 20.10 (p. 299)
-        CRUD 액션을 위한 링크 추가
-      -->
-      <div class="row">
-        <div class="col col-lg-10 offset-lg-2">
-          <!-- 프로필 페이지에서 사용자 계정의 편집 및 삭제를 위한 링크 추가 -->
-          <a href="/games" class="btn btn-primary">← Back to Game</a>
-          <a
-            href="/games/<%= game._id %>/edit"
-            class="btn btn-secondary"
-            role="button"
-            >✏️ Edit User</a
-          >
-          <a
-            href="/games/<%= game._id %>/delete?_method=DELETE"
-            onclick="return confirm('Are you sure you want to delete this record?')"
-            class="btn btn-danger disabled"
-            role="button"
-            aria-disabled="true"
-            >🗑️ Delete User</a
-          >
+  
+  
+        <!--
+          노트: 링크된 구독자 페이지가 제대로 동작하려면 이런 과정을 구독자를 위한 CRUD 함수 및
+          뷰의 생성에서도 동시에 따라야 할 것이다. Href 앵커 태그인 /subscribers/${user.susbcribedAccount}는
+          구독자의 show 페이지를 나타낸다.
+        -->
+  
+        <!--
+          Listing 20.10 (p. 299)
+          CRUD 액션을 위한 링크 추가
+        -->
+        <div class="row">
+          <div class="col col-lg-10 offset-lg-2">
+            <!-- 프로필 페이지에서 사용자 계정의 편집 및 삭제를 위한 링크 추가 -->
+            <a href="/games" class="btn btn-primary">← Back to Game</a>
+            <a
+              href="/games/<%= game._id %>/edit"
+              class="btn btn-secondary"
+              role="button"
+              >✏️ Edit User</a
+            >
+            <a
+              href="/games/<%= game._id %>/delete?_method=DELETE"
+              onclick="return confirm('Are you sure you want to delete this record?')"
+              class="btn btn-danger disabled"
+              role="button"
+              aria-disabled="true"
+              >🗑️ Delete User</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
+  

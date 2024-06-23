@@ -43,4 +43,5 @@ function toggleProfileImgEdit() {
   }
 }
 
-profileImgEditButton.addEventListener("click", toggleProfileImgEdit);
+if (profileImgEditButton)
+  profileImgEditButton.addEventListener("click", toggleProfileImgEdit);
