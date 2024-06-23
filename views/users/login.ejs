@@ -1,0 +1,48 @@
+<!-- views/users/login.ejs -->
+
+<!--
+    Listing 23.1 (p. 334)
+    login.ejs에서의 로그인 폼 생성
+-->
+<div class="form-signin w-100 m-auto text-center">
+    <form action="/users/login" method="POST">
+      <%- include('../_partials/_logo.ejs') %>
+      <br />
+  
+      <h1 class="h3 mb-3 fw-normal">Please Login</h1>
+  
+      <div class="form-floating">
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+        />
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <br />
+      <div class="checkbox mb-3">
+        <label> <input type="checkbox" value="remember-me" /> Remember me </label>
+      </div>
+      <button class="w-100 btn btn-lg ut-red" type="submit">Login</button>
+      <p class="mt-5 mb-3 text-body-secondary">© 2023 UT-Nodejs</p>
+    </form>
+  </div>
+  
+  <!--
+      [노트] show 및 edit 라우트 라인 위에 login 라우트를 추가하라. 순서가 바뀌면 Express.js는 경로에
+      있는 login이라는 단어를 사용자 ID로 인식하고 이에 해당하는 사용자를 찾으려 할 것이다. 바른 순서로 
+      라우트를 추가하면 애플리케이선은 사용자 ID를 URL에서 찾기 전에 login 라우트를 전체 경로로 인식한다.
+  -->
+  

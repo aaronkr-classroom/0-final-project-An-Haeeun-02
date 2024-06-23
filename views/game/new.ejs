@@ -1,97 +1,71 @@
-<!-- views/talks/new.ejs -->
+<!-- views/new.ejs -->
 
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="pt-5">
-      <h1>Add New Talk</h1>
-      <p>Add your latest presentation.</p>
+    <div class="row align-items-center g-lg-5 py-3">
+      <div class="col-lg-7 text-center text-lg-start mb-3">
+        <figure>
+          <img
+            src="https://cdn.pixabay.com/photo/2015/08/07/06/28/transportation-879026_960_720.jpg"
+          />
+        </figure>
+        <h1 class="display-4">Contact Us</h1>
+        <p class="lead col-lg-10 fs-4">Get in touch to find out more.</p>
+      </div>
 
-      <div class="row">
-        <div class="col-lg-6 mb-3 mt-3">
-          <div class="data-form">
-            <form action="/talks/create" method="POST">
-              <!-- 사용자 계정을 생성하기 위한 폼을 생성한다 -->
-              <div class="form-group">
-                <label for="username">사용자 이름</label>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="firstName">이름</label
-                ><!-- 폼의 input으로서 사용자 속성 추가 -->
-                <input
-                  type="text"
-                  name="first"
-                  id="firstName"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="lastName">성</label>
-                <input
-                  type="text"
-                  name="last"
-                  id="lastName"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="email">이메일</label
-                ><!-- email과 password 필드의 보호를 위한 HTML 속성 적용 -->
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password2">비밀번호 확인</label>
-                <input
-                  type="password"
-                  name="password2"
-                  id="password2"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group mb-3">
-                <label for="profileImg">사용자 이미지 링크</label>
-                <input
-                  type="text"
-                  name="profileImg"
-                  id="profileImg"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-lg ut-red">
-                  Add Talk
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="col-lg-6 text-center text-lg-start mb-3 mt-5">
-          <figure>
-            <img
-              src="https://cdn.pixabay.com/photo/2019/01/26/20/22/public-speaking-3956908_960_720.jpg"
+      <div class="col-md-10 mx-auto col-lg-5 mb-5">
+        <form
+          class="p-4 p-md-5 border rounded-3 bg-light"
+          action="/games/create"
+          method="post"
+        >
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingName"
+              placeholder="Name"
+              name="name"
+              required
             />
-          </figure>
-        </div>
+            <label for="floatingName">이름</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingCreater"
+              placeholder="Creater"
+              name="creater"
+              required
+            />
+            <label for="floatingCreater">창작자</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="url"
+              class="form-control"
+              id="floatingLink"
+              placeholder="https://example.com"
+              name="link"
+              required
+            />
+            <label for="floatingLink">링크</label>
+          </div>
+          <div class="checkbox mb-3">
+            <label for="type">모드 타입</label>
+            <select id="type" name="type" class="form-control" required>
+              <option value="mode">모드</option>
+              <option value="retexture">리텍스쳐</option>
+              <option value="expansion">확장</option>
+            </select>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary ut-red" type="submit">
+            추가하기
+          </button>
+          <hr />
+          <small class="text-muted">모드 추가하기</small>
+        </form>
       </div>
     </div>
   </div>

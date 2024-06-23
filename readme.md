@@ -30,7 +30,7 @@ Each of these models has a controller, views for the CRUD operations, and a seed
 - data/seedSubscribers.js // 몽고 DB에 데이터를 채우는 데 사용되는 데이터
 ```
 
-Your task is to **create ONE more model, controller, views, and seedData file.**<br>
+Your task is to **create ONE more model, controller, views, and see dData file.**<br>
 당신의 과제는 **하나의 모델, 컨트롤러, 뷰 및 seedData 파일을 더 만드는 것입니다.**
 
 This sample project introduces a `Talks` and a `Trains` MVC structure.<br>
